@@ -13,7 +13,7 @@ export const Comment = ({ comment }: CommentProps) => {
           className="ml-auto sm:hidden"
         />
       </div>
-      <div className="flex flex-col items-start gap-4">
+      <div className="flex flex-col items-start gap-4 w-full">
         <div className="flex flex-row gap-5 justify-start items-center w-full">
           <Avatar imgUrl={comment.user.image.png} />
           <Username username={comment.user.username} />

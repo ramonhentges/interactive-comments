@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Comment } from '../components';
-import { data } from '../data';
+import { useCommentsStore } from '../stores';
 
 const Home: NextPage = () => {
-  const comment = data.comments[1];
+  const { comments } = useCommentsStore();
   return (
     <div className="bg-lightGray w-screen min-h-screen flex flex-col items-center py-8 sm:py-10">
       <Head>
@@ -13,9 +13,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="px-5 sm:px-14">
-        <section>
-          <Comment comment={comment} />
+      <main className="flex flex-col px-5 sm:px-14 w-full">
+        <section className="flex flex-col gap-4">
+          {comments.map(comment => (
+            <Comment key={comment.id} comment={comment} />
+          ))}
         </section>
       </main>
 
