@@ -1,9 +1,12 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { Avatar, RateComment, Username } from '../components';
+import { Avatar, IconButton, RateComment, Username } from '../components';
 import { Body } from '../components/Typography/Body';
+import { data } from '../data';
+import { Icons } from '../enums/icons';
 
 const Home: NextPage = () => {
+  const comment = data.comments[0];
   return (
     <div className="bg-lightGray w-screen min-h-screen flex flex-col items-center py-8 sm:py-10">
       <Head>
@@ -12,16 +15,29 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="max-w-lg">
+      <main className="px-5 sm:px-14">
         <section>
-          <div className="bg-white rounded-lg flex flex-row items-start gap-5 p-8">
-            <RateComment />
-            <div className="flex flex-col gap-5">
-              <div className="flex flex-row gap-5 items-center">
-                <Avatar imgUrl="/assets/avatars/image-amyrobson.png" />
-                <Username username={'amyrobson'} />
-                <Body>1 month ago</Body>
+          <div className="bg-white rounded-lg flex flex-col-reverse sm:flex-row items-start gap-5 p-6">
+            <div className="flex flex-row justify-between items-center w-full sm:w-auto">
+              <RateComment />
+              <IconButton
+                icon={Icons.reply}
+                text={'Reply'}
+                className="ml-auto sm:hidden"
+              />
+            </div>
+            <div className="flex flex-col items-start gap-4">
+              <div className="flex flex-row gap-5 justify-start items-center w-full">
+                <Avatar imgUrl={comment.user.image.png} />
+                <Username username={comment.user.username} />
+                <Body>{comment.createdAt}</Body>
+                <IconButton
+                  icon={Icons.reply}
+                  text={'Reply'}
+                  className="ml-auto hidden sm:flex"
+                />
               </div>
+              <Body>{comment.content}</Body>
             </div>
           </div>
         </section>
