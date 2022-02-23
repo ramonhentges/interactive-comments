@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Comment } from '../../entities';
+import { Comment, Reply } from '../../entities';
 
 export const RateComment = ({ comment }: RateCommentProps) => {
   return (
@@ -30,5 +30,5 @@ export const RateComment = ({ comment }: RateCommentProps) => {
 };
 
 type RateCommentProps = {
-  comment: Comment;
+  comment: Comment | Reply;
 };

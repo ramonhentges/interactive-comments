@@ -1,6 +1,8 @@
 export const Username = ({ username }: UsernameProps) => {
   return (
-    <p className="font-rubik text-base text-darkBlue font-medium">{username}</p>
+    <span className="font-rubik text-base text-darkBlue font-medium">
+      {username}
+    </span>
   );
 };
 

@@ -1,6 +1,8 @@
 export const Body = ({ children }: BodyProps) => {
   return (
-    <p className="font-rubik text-base text-grayBlue font-normal">{children}</p>
+    <span className="font-rubik text-base text-grayBlue font-normal">
+      {children}
+    </span>
   );
 };
 
