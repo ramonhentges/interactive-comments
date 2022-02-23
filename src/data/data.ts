@@ -1,4 +1,6 @@
-export const data = {
+import { User, Comment } from '../entities';
+
+export const data: DataType = {
   currentUser: {
     image: {
       png: '/assets/avatars/image-juliusomo.png',
@@ -69,4 +71,9 @@ export const data = {
       ],
     },
   ],
+};
+
+type DataType = {
+  currentUser: User;
+  comments: Comment[];
 };

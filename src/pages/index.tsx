@@ -1,12 +1,10 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { Avatar, IconButton, RateComment, Username } from '../components';
-import { Body } from '../components/Typography/Body';
+import { Comment } from '../components';
 import { data } from '../data';
-import { Icons } from '../enums/icons';
 
 const Home: NextPage = () => {
-  const comment = data.comments[0];
+  const comment = data.comments[1];
   return (
     <div className="bg-lightGray w-screen min-h-screen flex flex-col items-center py-8 sm:py-10">
       <Head>
@@ -17,29 +15,7 @@ const Home: NextPage = () => {
 
       <main className="px-5 sm:px-14">
         <section>
-          <div className="bg-white rounded-lg flex flex-col-reverse sm:flex-row items-start gap-5 p-6">
-            <div className="flex flex-row justify-between items-center w-full sm:w-auto">
-              <RateComment />
-              <IconButton
-                icon={Icons.reply}
-                text={'Reply'}
-                className="ml-auto sm:hidden"
-              />
-            </div>
-            <div className="flex flex-col items-start gap-4">
-              <div className="flex flex-row gap-5 justify-start items-center w-full">
-                <Avatar imgUrl={comment.user.image.png} />
-                <Username username={comment.user.username} />
-                <Body>{comment.createdAt}</Body>
-                <IconButton
-                  icon={Icons.reply}
-                  text={'Reply'}
-                  className="ml-auto hidden sm:flex"
-                />
-              </div>
-              <Body>{comment.content}</Body>
-            </div>
-          </div>
+          <Comment comment={comment} />
         </section>
       </main>
 

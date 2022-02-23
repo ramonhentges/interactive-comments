@@ -1,8 +1,12 @@
-export const Comment = () => {
+import { RateComment, IconButton, Avatar, Username, Body } from '..';
+import { Comment as CommentEntity } from '../../entities';
+import { Icons } from '../../enums/icons';
+
+export const Comment = ({ comment }: CommentProps) => {
   return (
     <div className="bg-white rounded-lg flex flex-col-reverse sm:flex-row items-start gap-5 p-6">
       <div className="flex flex-row justify-between items-center w-full sm:w-auto">
-        <RateComment />
+        <RateComment comment={comment} />
         <IconButton
           icon={Icons.reply}
           text={'Reply'}
@@ -24,4 +28,8 @@ export const Comment = () => {
       </div>
     </div>
   );
+};
+
+type CommentProps = {
+  comment: CommentEntity;
 };
