@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { Avatar, RateComment } from '../components';
+import { Avatar, RateComment, Username } from '../components';
+import { Body } from '../components/Typography/Body';
 
 const Home: NextPage = () => {
   return (
@@ -16,8 +17,10 @@ const Home: NextPage = () => {
           <div className="bg-white rounded-lg flex flex-row items-start gap-5 p-8">
             <RateComment />
             <div className="flex flex-col gap-5">
-              <div className="flex-flex-row gap-5 items-start">
+              <div className="flex flex-row gap-5 items-center">
                 <Avatar imgUrl="/assets/avatars/image-amyrobson.png" />
+                <Username username={'amyrobson'} />
+                <Body>1 month ago</Body>
               </div>
             </div>
           </div>

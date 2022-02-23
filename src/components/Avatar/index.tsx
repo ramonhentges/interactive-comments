@@ -6,8 +6,8 @@ export const Avatar = ({ imgUrl }: AvatarProps) => {
       src={imgUrl}
       alt="Avatar"
       className="rounded-full"
-      width={45}
-      height={45}
+      width={35}
+      height={35}
     />
   );
 };

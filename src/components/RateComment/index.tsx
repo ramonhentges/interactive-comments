@@ -12,7 +12,7 @@ export const RateComment = () => {
           height={'11px'}
         />
       </button>
-      <p className="font-rubik font-semibold text-base text-blue">12</p>
+      <p className="font-rubik font-medium text-base text-blue">12</p>
       <button>
         <Image
           src="/assets/icon-minus.svg"
