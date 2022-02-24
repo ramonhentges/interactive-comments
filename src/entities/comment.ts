@@ -1,10 +1,11 @@
 import { User, Reply } from '.';
+import { getId } from '../stores';
 
 export class Comment {
   constructor() {
-    this.id = -1;
+    this.id = getId();
     this.content = '';
-    this.createdAt = '';
+    this.createdAt = 'now';
     this.score = 0;
     this.user = new User();
     this.replies = [];

@@ -1,6 +1,13 @@
 import createStore from 'zustand';
 import { data } from '../data';
-import { Comment, Reply } from '../entities';
+import { Comment } from '../entities';
+
+let lastId = 4;
+
+export const getId = () => {
+  lastId++;
+  return lastId;
+};
 
 export const useCommentsStore = createStore<CommentsStoreProps>(set => ({
   comments: data.comments,
@@ -44,10 +51,14 @@ export const useCommentsStore = createStore<CommentsStoreProps>(set => ({
       }),
     }));
   },
+  addComment: (comment: Comment) => {
+    set(state => ({ comments: [...state.comments, comment] }));
+  },
 }));
 
 type CommentsStoreProps = {
   comments: Comment[];
   addScore: (id: number) => void;
   removeScore: (id: number) => void;
+  addComment: (comment: Comment) => void;
 };
