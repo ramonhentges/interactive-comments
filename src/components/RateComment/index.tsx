@@ -3,7 +3,7 @@ import { Comment, Reply } from '../../entities';
 
 export const RateComment = ({ comment }: RateCommentProps) => {
   return (
-    <div className="flex flex-row sm:flex-col items-center justify-center px-3 py-1 gap-4 sm:gap-2 bg-lightGray rounded-lg">
+    <div className="flex flex-row sm:flex-col items-center justify-center px-3 py-1 gap-4 sm:gap-2 bg-lightGray bg-opacity-50 rounded-lg">
       <button className="opacity-40 hover:opacity-90">
         <Image
           src="/assets/icon-plus.svg"
