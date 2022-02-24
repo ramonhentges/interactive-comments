@@ -3,6 +3,13 @@ import { useAuthStore } from '../../stores';
 
 export const AddComment = ({ type }: AddCommentProps) => {
   const { user } = useAuthStore();
+
+  const sendTexts = {
+    new: 'send',
+    edit: 'update',
+    reply: 'reply',
+  };
+
   return (
     <div className="bg-white rounded-lg w-full mt-4 p-6 flex flex-col sm:flex-row sm:items-start gap-4">
       <div className="hidden sm:flex">
@@ -13,7 +20,7 @@ export const AddComment = ({ type }: AddCommentProps) => {
         <div className="block sm:hidden">
           <Avatar imgUrl={user.image.png} />
         </div>
-        <ContainedButton text="send" />
+        <ContainedButton text={sendTexts[type]} />
       </div>
     </div>
   );
