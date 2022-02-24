@@ -1,8 +1,15 @@
 import { IconType } from '../../../enums/icons';
 import Image from 'next/image';
-export const IconButton = ({ icon, text, className = '' }: IconButtonProps) => {
+import { MouseEventHandler } from 'react';
+export const IconButton = ({
+  icon,
+  text,
+  className = '',
+  onClick,
+}: IconButtonProps) => {
   return (
     <button
+      onClick={onClick}
       className={`flex flex-row gap-2 items-center font-rubik ${
         icon.color === 'red' ? 'text-red' : 'text-blue'
       } text-base font-medium hover:opacity-40 ${className}`}>
@@ -22,4 +29,5 @@ type IconButtonProps = {
   icon: IconType;
   text: string;
   className?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 };

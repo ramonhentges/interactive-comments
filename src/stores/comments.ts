@@ -1,6 +1,7 @@
 import createStore from 'zustand';
+import { useAuthStore } from '.';
 import { data } from '../data';
-import { Comment } from '../entities';
+import { Comment, Reply } from '../entities';
 
 let lastId = 4;
 
@@ -11,6 +12,17 @@ export const getId = () => {
 
 export const useCommentsStore = createStore<CommentsStoreProps>(set => ({
   comments: data.comments,
+  replying: [],
+  startReply: (comment: Comment, replyingTo: string) => {
+    const reply = new Reply();
+    reply.user = useAuthStore.getState().user;
+    reply.replyingTo = replyingTo;
+    const replying: Replying = {
+      comment,
+      reply,
+    };
+    set(state => ({ replying: [...state.replying, replying] }));
+  },
   addScore: (id: number) => {
     set(state => ({
       comments: state.comments.map(comment => {
@@ -58,7 +70,14 @@ export const useCommentsStore = createStore<CommentsStoreProps>(set => ({
 
 type CommentsStoreProps = {
   comments: Comment[];
+  replying: Replying[];
+  startReply: (comment: Comment, replyingTo: string) => void;
   addScore: (id: number) => void;
   removeScore: (id: number) => void;
   addComment: (comment: Comment) => void;
+};
+
+type Replying = {
+  comment: Comment;
+  reply: Reply;
 };

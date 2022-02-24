@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import {
   RateComment,
   IconButton,
@@ -9,10 +10,16 @@ import {
 } from '..';
 import { Comment as CommentEntity } from '../../entities';
 import { Icons } from '../../enums/icons';
-import { useAuthStore } from '../../stores';
+import { useAuthStore, useCommentsStore } from '../../stores';
 
 export const Comment = ({ comment }: CommentProps) => {
   const { user } = useAuthStore();
+  const { startReply } = useCommentsStore();
+
+  const reply = useCallback(() => {
+    startReply(comment, comment.user.username);
+  }, [startReply, comment]);
+
   return (
     <div className="flex flex-col items-start w-full">
       <div className="bg-white rounded-lg flex flex-col-reverse sm:flex-row items-start gap-5 p-6 mb-4">
@@ -28,6 +35,7 @@ export const Comment = ({ comment }: CommentProps) => {
               icon={Icons.reply}
               text={'Reply'}
               className="ml-auto flex sm:hidden"
+              onClick={reply}
             />
           )}
         </div>
@@ -51,6 +59,7 @@ export const Comment = ({ comment }: CommentProps) => {
                 icon={Icons.reply}
                 text={'Reply'}
                 className="ml-auto hidden sm:flex"
+                onClick={reply}
               />
             )}
           </div>
@@ -63,7 +72,7 @@ export const Comment = ({ comment }: CommentProps) => {
         </div>
         <div className="flex flex-col items-start gap-4 w-full">
           {comment.replies.map(reply => (
-            <Reply key={reply.id} reply={reply} />
+            <Reply key={reply.id} reply={reply} comment={comment} />
           ))}
         </div>
       </div>

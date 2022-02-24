@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import {
   RateComment,
   IconButton,
@@ -7,12 +8,18 @@ import {
   ReplyUsername,
   Contained,
 } from '..';
-import { Reply as ReplyEntity } from '../../entities';
+import { Comment, Reply as ReplyEntity } from '../../entities';
 import { Icons } from '../../enums/icons';
-import { useAuthStore } from '../../stores';
+import { useAuthStore, useCommentsStore } from '../../stores';
 
-export const Reply = ({ reply }: ReplyProps) => {
+export const Reply = ({ reply, comment }: ReplyProps) => {
   const { user } = useAuthStore();
+  const { startReply } = useCommentsStore();
+
+  const onReply = useCallback(() => {
+    startReply(comment, reply.user.username);
+  }, [startReply, reply, comment]);
+
   return (
     <div className="bg-white rounded-lg flex flex-col-reverse sm:flex-row items-start gap-5 p-6">
       <div className="flex flex-row justify-between items-center w-full sm:w-auto">
@@ -27,6 +34,7 @@ export const Reply = ({ reply }: ReplyProps) => {
             icon={Icons.reply}
             text={'Reply'}
             className="ml-auto flex sm:hidden"
+            onClick={onReply}
           />
         )}
       </div>
@@ -50,6 +58,7 @@ export const Reply = ({ reply }: ReplyProps) => {
               icon={Icons.reply}
               text={'Reply'}
               className="ml-auto hidden sm:flex"
+              onClick={onReply}
             />
           )}
         </div>
@@ -64,5 +73,6 @@ export const Reply = ({ reply }: ReplyProps) => {
 };
 
 type ReplyProps = {
+  comment: Comment;
   reply: ReplyEntity;
 };
