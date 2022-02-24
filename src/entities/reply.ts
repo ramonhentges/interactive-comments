@@ -2,7 +2,7 @@ import { User } from '.';
 
 export class Reply {
   constructor() {
-    this.id = undefined;
+    this.id = -1;
     this.content = '';
     this.createdAt = '';
     this.replyingTo = '';
@@ -10,7 +10,7 @@ export class Reply {
     this.user = new User();
   }
 
-  id?: number;
+  id: number;
   content: string;
   createdAt: string;
   replyingTo: string;

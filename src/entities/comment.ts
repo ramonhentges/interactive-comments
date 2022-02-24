@@ -2,7 +2,7 @@ import { User, Reply } from '.';
 
 export class Comment {
   constructor() {
-    this.id = undefined;
+    this.id = -1;
     this.content = '';
     this.createdAt = '';
     this.score = 0;
@@ -10,7 +10,7 @@ export class Comment {
     this.replies = [];
   }
 
-  id?: number;
+  id: number;
   content: string;
   createdAt: string;
   score: number;
