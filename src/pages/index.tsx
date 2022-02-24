@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { Comment } from '../components';
+import { AddComment, Comment } from '../components';
 import { useCommentsStore } from '../stores';
 
 const Home: NextPage = () => {
@@ -18,6 +18,7 @@ const Home: NextPage = () => {
           {comments.map(comment => (
             <Comment key={comment.id} comment={comment} />
           ))}
+          <AddComment type="new" />
         </section>
       </main>
 

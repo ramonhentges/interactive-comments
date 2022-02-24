@@ -1,6 +1,5 @@
-import { Icons, IconType } from '../../../enums/icons';
+import { IconType } from '../../../enums/icons';
 import Image from 'next/image';
-import { useMemo } from 'react';
 export const IconButton = ({ icon, text, className = '' }: IconButtonProps) => {
   return (
     <button
