@@ -9,6 +9,7 @@ export class Reply {
     this.replyingTo = '';
     this.score = 0;
     this.user = new User();
+    this.editing = false;
   }
 
   id: number;
@@ -17,4 +18,5 @@ export class Reply {
   replyingTo: string;
   score: number;
   user: User;
+  editing?: boolean;
 }

@@ -15,11 +15,15 @@ import { useAuthStore, useCommentsStore } from '../../stores';
 
 export const Reply = ({ reply, comment }: ReplyProps) => {
   const { user } = useAuthStore();
-  const { startReply, replying } = useCommentsStore();
+  const { startReply, replying, startEdit } = useCommentsStore();
 
   const onReply = useCallback(() => {
     startReply(comment, reply);
   }, [startReply, reply, comment]);
+
+  const onEdit = useCallback(() => {
+    startEdit(reply);
+  }, [startEdit, reply]);
 
   return (
     <>
@@ -29,7 +33,7 @@ export const Reply = ({ reply, comment }: ReplyProps) => {
           {reply.user.username === user.username ? (
             <div className="ml-auto flex sm:hidden sm: gap-4">
               <IconButton icon={Icons.delete} text={'Delete'} />
-              <IconButton icon={Icons.edit} text={'Edit'} />
+              <IconButton icon={Icons.edit} text={'Edit'} onClick={onEdit} />
             </div>
           ) : (
             <IconButton
@@ -53,7 +57,7 @@ export const Reply = ({ reply, comment }: ReplyProps) => {
             {reply.user.username === user.username ? (
               <div className="ml-auto hidden sm:flex sm: gap-6">
                 <IconButton icon={Icons.delete} text={'Delete'} />
-                <IconButton icon={Icons.edit} text={'Edit'} />
+                <IconButton icon={Icons.edit} text={'Edit'} onClick={onEdit} />
               </div>
             ) : (
               <IconButton
@@ -71,12 +75,9 @@ export const Reply = ({ reply, comment }: ReplyProps) => {
           </Body>
         </div>
       </div>
-      {
-        //@ts-ignore
-        replying[reply.id] && (
-          <AddComment type="reply" replyingToId={reply.id} />
-        )
-      }
+      {replying[reply.id] && (
+        <AddComment type="reply" replyingToId={reply.id} />
+      )}
     </>
   );
 };

@@ -1,17 +1,18 @@
 import { useCallback } from 'react';
 import {
-  RateComment,
-  IconButton,
-  Avatar,
-  Username,
-  Body,
-  Reply,
-  Contained,
   AddComment,
+  Avatar,
+  Body,
+  Contained,
+  IconButton,
+  RateComment,
+  Reply,
+  Username,
 } from '..';
 import { Comment as CommentEntity } from '../../entities';
 import { Icons } from '../../enums/icons';
 import { useAuthStore, useCommentsStore } from '../../stores';
+import { EditingContent } from '../EditingContent';
 
 export const Comment = ({ comment }: CommentProps) => {
   const { user } = useAuthStore();
@@ -73,15 +74,16 @@ export const Comment = ({ comment }: CommentProps) => {
           <div className="bg-grayBlue bg-opacity-20 w-[1px] h-full"></div>
         </div>
         <div className="flex flex-col items-start gap-4 w-full">
-          {
-            //@ts-ignore
-            replying[comment.id] && (
-              <AddComment type="reply" replyingToId={comment.id} />
-            )
-          }
-          {comment.replies.map(reply => (
-            <Reply key={reply.id} reply={reply} comment={comment} />
-          ))}
+          {replying[comment.id] && (
+            <AddComment type="reply" replyingToId={comment.id} />
+          )}
+          {comment.replies.map(reply =>
+            reply.editing ? (
+              <EditingContent key={reply.id} content={reply} />
+            ) : (
+              <Reply key={reply.id} reply={reply} comment={comment} />
+            ),
+          )}
         </div>
       </div>
     </div>

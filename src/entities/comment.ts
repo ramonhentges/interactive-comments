@@ -9,6 +9,7 @@ export class Comment {
     this.score = 0;
     this.user = new User();
     this.replies = [];
+    this.editing = false;
   }
 
   id: number;
@@ -17,4 +18,5 @@ export class Comment {
   score: number;
   user: User;
   replies: Reply[];
+  editing?: boolean;
 }

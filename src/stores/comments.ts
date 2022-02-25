@@ -13,6 +13,7 @@ export const getId = () => {
 export const useCommentsStore = createStore<CommentsStoreProps>((set, get) => ({
   comments: data.comments,
   replying: {},
+  edits: {},
   startReply: (comment: Comment, replyingReply?: Reply) => {
     const reply = new Reply();
     reply.user = useAuthStore.getState().user;
@@ -31,7 +32,6 @@ export const useCommentsStore = createStore<CommentsStoreProps>((set, get) => ({
   },
   sendReply: (repliyingToId: number, content: string) => {
     const replies = get().replying;
-    //@ts-ignore
     const startedReply = { ...replies[repliyingToId] };
 
     startedReply.reply.content = content.replace(
@@ -39,7 +39,6 @@ export const useCommentsStore = createStore<CommentsStoreProps>((set, get) => ({
       '',
     );
 
-    //@ts-ignore
     delete replies[repliyingToId];
     set(state => ({
       comments: state.comments.map(comment => {
@@ -94,19 +93,40 @@ export const useCommentsStore = createStore<CommentsStoreProps>((set, get) => ({
   addComment: (comment: Comment) => {
     set(state => ({ comments: [...state.comments, comment] }));
   },
+  startEdit: (comment: Comment | Reply) => {
+    set(state => ({
+      comments: state.comments.map(value => {
+        setEditing(comment.id, value);
+        value.replies.forEach(reply => {
+          setEditing(comment.id, reply);
+        });
+        return value;
+      }),
+    }));
+    console.log(get().comments);
+  },
 }));
+
+const setEditing = (id: number, comment: Comment | Reply) => {
+  if (id === comment.id) {
+    comment.editing = true;
+  }
+};
 
 type CommentsStoreProps = {
   comments: Comment[];
-  replying: object;
+  replying: Replies;
   startReply: (comment: Comment, replyingReply?: Reply) => void;
   sendReply: (repliyingToId: number, content: string) => void;
   addScore: (id: number) => void;
   removeScore: (id: number) => void;
   addComment: (comment: Comment) => void;
+  startEdit: (comment: Comment | Reply) => void;
 };
 
 type Replying = {
   comment: Comment;
   reply: Reply;
 };
+
+type Replies = Record<number, Replying>;

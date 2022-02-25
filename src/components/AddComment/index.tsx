@@ -14,7 +14,6 @@ export const AddComment = ({
 
   const replyingTo = useMemo(() => {
     if (replyingToId > 0) {
-      //@ts-ignore
       return `@${replying[replyingToId].reply.replyingTo}`;
     }
     return '';
@@ -41,7 +40,6 @@ export const AddComment = ({
 
   const sendTexts = {
     new: 'send',
-    edit: 'update',
     reply: 'reply',
   };
 
@@ -55,6 +53,7 @@ export const AddComment = ({
         value={`${replyingTo}${commentText}`}
         placeholder="Add a comment..."
         onChange={changeCommentText}
+        className="grow"
       />
 
       <div className="flex flex-row items-center justify-between">
@@ -68,7 +67,7 @@ export const AddComment = ({
 };
 
 type AddCommentProps = {
-  type: 'new' | 'edit' | 'reply';
+  type: 'new' | 'reply';
   replyingToId?: number;
   className?: string;
 };
