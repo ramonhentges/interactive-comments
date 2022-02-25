@@ -103,13 +103,34 @@ export const useCommentsStore = createStore<CommentsStoreProps>((set, get) => ({
         return value;
       }),
     }));
-    console.log(get().comments);
+  },
+  sendEdit: (comment: Comment | Reply, newContent: string) => {
+    set(state => ({
+      comments: state.comments.map(value => {
+        finishEditing(comment.id, value, newContent);
+        value.replies.forEach(reply => {
+          finishEditing(comment.id, reply, newContent);
+        });
+        return value;
+      }),
+    }));
   },
 }));
 
 const setEditing = (id: number, comment: Comment | Reply) => {
   if (id === comment.id) {
     comment.editing = true;
+  }
+};
+
+const finishEditing = (
+  id: number,
+  comment: Comment | Reply,
+  newContent: string,
+) => {
+  if (id === comment.id) {
+    comment.editing = false;
+    comment.content = newContent;
   }
 };
 
@@ -122,6 +143,7 @@ type CommentsStoreProps = {
   removeScore: (id: number) => void;
   addComment: (comment: Comment) => void;
   startEdit: (comment: Comment | Reply) => void;
+  sendEdit: (comment: Comment | Reply, newContent: string) => void;
 };
 
 type Replying = {

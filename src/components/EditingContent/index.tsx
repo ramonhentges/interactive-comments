@@ -11,10 +11,11 @@ import {
 } from '..';
 import { Comment, Reply as ReplyEntity } from '../../entities';
 import { Icons } from '../../enums/icons';
-import { useAuthStore } from '../../stores';
+import { useAuthStore, useCommentsStore } from '../../stores';
 
 export const EditingContent = ({ content }: EditingContentProps) => {
   const { user } = useAuthStore();
+  const { sendEdit } = useCommentsStore();
 
   const [commentText, setCommentText] = useState(content.content);
 
@@ -26,12 +27,17 @@ export const EditingContent = ({ content }: EditingContentProps) => {
     }
     return `@${content.user.username}`;
   }, [content]);
+
   const changeCommentText = useCallback(
     (event: ChangeEvent<HTMLTextAreaElement>) => {
       setCommentText(event.target.value.replace(replyingTo, ''));
     },
     [replyingTo],
   );
+
+  const handleEdit = useCallback(() => {
+    sendEdit(content, commentText);
+  }, [content, sendEdit, commentText]);
 
   return (
     <div className="bg-white rounded-lg flex flex-col-reverse sm:flex-row items-start gap-5 p-6 w-full">
@@ -63,7 +69,11 @@ export const EditingContent = ({ content }: EditingContentProps) => {
           className="w-full"
           onChange={changeCommentText}
         />
-        <ContainedButton text="update" onClick={() => {}} className="ml-auto" />
+        <ContainedButton
+          text="update"
+          onClick={handleEdit}
+          className="ml-auto"
+        />
       </div>
     </div>
   );
