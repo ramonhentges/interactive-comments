@@ -75,7 +75,9 @@ export const Comment = ({ comment }: CommentProps) => {
         <div className="flex flex-col items-start gap-4 w-full">
           {
             //@ts-ignore
-            replying[comment.id] && <AddComment type="reply" />
+            replying[comment.id] && (
+              <AddComment type="reply" replyingToId={comment.id} />
+            )
           }
           {comment.replies.map(reply => (
             <Reply key={reply.id} reply={reply} comment={comment} />

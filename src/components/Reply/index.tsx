@@ -73,7 +73,9 @@ export const Reply = ({ reply, comment }: ReplyProps) => {
       </div>
       {
         //@ts-ignore
-        replying[reply.id] && <AddComment type="reply" />
+        replying[reply.id] && (
+          <AddComment type="reply" replyingToId={reply.id} />
+        )
       }
     </>
   );

@@ -1,18 +1,30 @@
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { Avatar, ContainedButton, TextArea } from '..';
 import { Comment } from '../../entities';
-import { getId, useAuthStore, useCommentsStore } from '../../stores';
+import { useAuthStore, useCommentsStore } from '../../stores';
 
-export const AddComment = ({ type, className = '' }: AddCommentProps) => {
+export const AddComment = ({
+  type,
+  className = '',
+  replyingToId = 0,
+}: AddCommentProps) => {
   const { user } = useAuthStore();
-  const { addComment } = useCommentsStore();
+  const { addComment, sendReply, replying } = useCommentsStore();
   const [commentText, setCommentText] = useState<string>('');
+
+  const replyingTo = useMemo(() => {
+    if (replyingToId > 0) {
+      //@ts-ignore
+      return `@${replying[replyingToId].reply.replyingTo}`;
+    }
+    return '';
+  }, [replyingToId, replying]);
 
   const changeCommentText = useCallback(
     (event: ChangeEvent<HTMLTextAreaElement>) => {
-      setCommentText(event.target.value);
+      setCommentText(event.target.value.replace(replyingTo, ''));
     },
-    [],
+    [replyingTo],
   );
 
   const sendComment = useCallback(() => {
@@ -21,9 +33,11 @@ export const AddComment = ({ type, className = '' }: AddCommentProps) => {
       comment.user = user;
       comment.content = commentText;
       addComment(comment);
+    } else if (type === 'reply') {
+      sendReply(replyingToId, commentText);
     }
     setCommentText('');
-  }, [type, user, commentText, addComment]);
+  }, [type, user, commentText, addComment, sendReply, replyingToId]);
 
   const sendTexts = {
     new: 'send',
@@ -38,10 +52,11 @@ export const AddComment = ({ type, className = '' }: AddCommentProps) => {
         <Avatar imgUrl={user.image.png} />
       </div>
       <TextArea
-        value={commentText}
+        value={`${replyingTo}${commentText}`}
         placeholder="Add a comment..."
         onChange={changeCommentText}
       />
+
       <div className="flex flex-row items-center justify-between">
         <div className="block sm:hidden">
           <Avatar imgUrl={user.image.png} />
@@ -54,5 +69,6 @@ export const AddComment = ({ type, className = '' }: AddCommentProps) => {
 
 type AddCommentProps = {
   type: 'new' | 'edit' | 'reply';
+  replyingToId?: number;
   className?: string;
 };

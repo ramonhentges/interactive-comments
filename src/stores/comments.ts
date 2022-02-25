@@ -26,7 +26,29 @@ export const useCommentsStore = createStore<CommentsStoreProps>((set, get) => ({
     };
     const replyingToId = replyingReply ? replyingReply.id : comment.id;
     set(state => ({
-      replying: { ...state.replying, [replyingToId]: { replying } },
+      replying: { ...state.replying, [replyingToId]: { ...replying } },
+    }));
+  },
+  sendReply: (repliyingToId: number, content: string) => {
+    const replies = get().replying;
+    //@ts-ignore
+    const startedReply = { ...replies[repliyingToId] };
+
+    startedReply.reply.content = content.replace(
+      `@${startedReply.reply.replyingTo}`,
+      '',
+    );
+
+    //@ts-ignore
+    delete replies[repliyingToId];
+    set(state => ({
+      comments: state.comments.map(comment => {
+        if (comment.id === startedReply.comment.id) {
+          comment.replies.push(startedReply.reply);
+        }
+        return comment;
+      }),
+      replying: replies,
     }));
   },
   addScore: (id: number) => {
@@ -78,6 +100,7 @@ type CommentsStoreProps = {
   comments: Comment[];
   replying: object;
   startReply: (comment: Comment, replyingReply?: Reply) => void;
+  sendReply: (repliyingToId: number, content: string) => void;
   addScore: (id: number) => void;
   removeScore: (id: number) => void;
   addComment: (comment: Comment) => void;
