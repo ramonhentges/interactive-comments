@@ -7,6 +7,7 @@ import {
   Body,
   Reply,
   Contained,
+  AddComment,
 } from '..';
 import { Comment as CommentEntity } from '../../entities';
 import { Icons } from '../../enums/icons';
@@ -14,10 +15,10 @@ import { useAuthStore, useCommentsStore } from '../../stores';
 
 export const Comment = ({ comment }: CommentProps) => {
   const { user } = useAuthStore();
-  const { startReply } = useCommentsStore();
+  const { startReply, replying } = useCommentsStore();
 
   const reply = useCallback(() => {
-    startReply(comment, comment.user.username);
+    startReply(comment);
   }, [startReply, comment]);
 
   return (
@@ -66,11 +67,16 @@ export const Comment = ({ comment }: CommentProps) => {
           <Body>{comment.content}</Body>
         </div>
       </div>
-      <div className="flex flex-row">
+
+      <div className="flex flex-row w-full">
         <div className="px-10">
           <div className="bg-grayBlue bg-opacity-20 w-[1px] h-full"></div>
         </div>
         <div className="flex flex-col items-start gap-4 w-full">
+          {
+            //@ts-ignore
+            replying[comment.id] && <AddComment type="reply" />
+          }
           {comment.replies.map(reply => (
             <Reply key={reply.id} reply={reply} comment={comment} />
           ))}

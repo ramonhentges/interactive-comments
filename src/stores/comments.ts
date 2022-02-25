@@ -10,18 +10,24 @@ export const getId = () => {
   return lastId;
 };
 
-export const useCommentsStore = createStore<CommentsStoreProps>(set => ({
+export const useCommentsStore = createStore<CommentsStoreProps>((set, get) => ({
   comments: data.comments,
-  replying: [],
-  startReply: (comment: Comment, replyingTo: string) => {
+  replying: {},
+  startReply: (comment: Comment, replyingReply?: Reply) => {
     const reply = new Reply();
     reply.user = useAuthStore.getState().user;
-    reply.replyingTo = replyingTo;
+    replyingReply
+      ? (reply.replyingTo = replyingReply.user.username)
+      : (reply.replyingTo = comment.user.username);
+
     const replying: Replying = {
       comment,
       reply,
     };
-    set(state => ({ replying: [...state.replying, replying] }));
+    const replyingToId = replyingReply ? replyingReply.id : comment.id;
+    set(state => ({
+      replying: { ...state.replying, [replyingToId]: { replying } },
+    }));
   },
   addScore: (id: number) => {
     set(state => ({
@@ -70,8 +76,8 @@ export const useCommentsStore = createStore<CommentsStoreProps>(set => ({
 
 type CommentsStoreProps = {
   comments: Comment[];
-  replying: Replying[];
-  startReply: (comment: Comment, replyingTo: string) => void;
+  replying: object;
+  startReply: (comment: Comment, replyingReply?: Reply) => void;
   addScore: (id: number) => void;
   removeScore: (id: number) => void;
   addComment: (comment: Comment) => void;

@@ -18,7 +18,7 @@ const Home: NextPage = () => {
           {comments.map(comment => (
             <Comment key={comment.id} comment={comment} />
           ))}
-          <AddComment type="new" />
+          <AddComment type="new" className="mt-4" />
         </section>
       </main>
 

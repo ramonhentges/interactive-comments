@@ -3,7 +3,7 @@ import { Avatar, ContainedButton, TextArea } from '..';
 import { Comment } from '../../entities';
 import { getId, useAuthStore, useCommentsStore } from '../../stores';
 
-export const AddComment = ({ type }: AddCommentProps) => {
+export const AddComment = ({ type, className = '' }: AddCommentProps) => {
   const { user } = useAuthStore();
   const { addComment } = useCommentsStore();
   const [commentText, setCommentText] = useState<string>('');
@@ -32,7 +32,8 @@ export const AddComment = ({ type }: AddCommentProps) => {
   };
 
   return (
-    <div className="bg-white rounded-lg w-full mt-4 p-6 flex flex-col sm:flex-row sm:items-start gap-4">
+    <div
+      className={`bg-white rounded-lg w-full p-6 flex flex-col sm:flex-row sm:items-start gap-4 ${className}`}>
       <div className="hidden sm:flex">
         <Avatar imgUrl={user.image.png} />
       </div>
@@ -53,4 +54,5 @@ export const AddComment = ({ type }: AddCommentProps) => {
 
 type AddCommentProps = {
   type: 'new' | 'edit' | 'reply';
+  className?: string;
 };
