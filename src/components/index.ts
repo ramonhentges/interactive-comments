@@ -6,3 +6,4 @@ export * from './Comment';
 export * from './Reply';
 export * from './AddComment';
 export * from './TextArea';
+export * from './Modals';

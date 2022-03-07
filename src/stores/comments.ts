@@ -115,6 +115,18 @@ export const useCommentsStore = createStore<CommentsStoreProps>((set, get) => ({
       }),
     }));
   },
+  deleteComment: (comment: Comment | Reply) => {
+    set(state => ({
+      comments: state.comments
+        .filter(value => value.id !== comment.id)
+        .map(value => {
+          value.replies = value.replies.filter(
+            reply => reply.id !== comment.id,
+          );
+          return value;
+        }),
+    }));
+  },
 }));
 
 const setEditing = (id: number, comment: Comment | Reply) => {
@@ -144,6 +156,7 @@ type CommentsStoreProps = {
   addComment: (comment: Comment) => void;
   startEdit: (comment: Comment | Reply) => void;
   sendEdit: (comment: Comment | Reply, newContent: string) => void;
+  deleteComment: (comment: Comment | Reply) => void;
 };
 
 type Replying = {
