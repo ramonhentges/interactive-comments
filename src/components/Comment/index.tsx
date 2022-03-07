@@ -43,8 +43,8 @@ export const Comment = ({ comment }: CommentProps) => {
 
   return (
     <>
-      <div className="flex flex-col items-start w-full">
-        <div className="bg-white rounded-lg flex flex-col-reverse sm:flex-row items-start gap-5 p-6 mb-4 w-full">
+      <div className="flex flex-col items-start w-full gap-4">
+        <div className="bg-white rounded-lg flex flex-col-reverse sm:flex-row items-start gap-5 p-6 w-full">
           <div className="flex flex-row justify-between items-center w-full sm:w-auto">
             <RateComment comment={comment} />
             {comment.user.username === user.username ? (

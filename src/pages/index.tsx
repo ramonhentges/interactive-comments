@@ -14,15 +14,13 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="flex flex-col px-5 sm:px-14 w-full">
-        <section className="flex flex-col">
+        <section className="flex flex-col gap-4">
           {comments.map(comment => (
             <Comment key={comment.id} comment={comment} />
           ))}
-          <AddComment type="new" className="mt-4" />
+          <AddComment type="new" />
         </section>
       </main>
-
-      <footer></footer>
     </div>
   );
 };
