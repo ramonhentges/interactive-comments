@@ -31,7 +31,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [Solution](https://github.com/ramonhentges/interactive-comments)
-- Live Site URL: [Live Site](https://interactive-comments-6c3mujo01-ramonhentges.vercel.app/)
+- Live Site URL: [Live Site](https://interactive-comments-eight.vercel.app/)
 
 ### Built with
 
